@@ -1,0 +1,7 @@
+services:
+  wardogs-app:
+    build: .
+    container_name: wardogs-app
+    ports:
+      - "8080:80"
+    restart: unless-stopped

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wardogs Mortar Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Mortar Fire Calculator</h1>
+    <p class="subtitle">Wardogs &mdash; range, elevation &amp; firing height solver</p>
+  </header>
+
+  <main>
+    <section class="panel" aria-labelledby="firer-heading">
+      <h2 id="firer-heading">Firing Position</h2>
+      <div class="field-row">
+        <label for="firer-x">X</label>
+        <input type="number" id="firer-x" step="any" placeholder="0" inputmode="decimal">
+        <label for="firer-y">Y</label>
+        <input type="number" id="firer-y" step="any" placeholder="0" inputmode="decimal">
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="target-heading">
+      <h2 id="target-heading">Target Position</h2>
+      <div class="field-row">
+        <label for="target-x">X</label>
+        <input type="number" id="target-x" step="any" placeholder="0" inputmode="decimal">
+        <label for="target-y">Y</label>
+        <input type="number" id="target-y" step="any" placeholder="0" inputmode="decimal">
+      </div>
+    </section>
+
+    <button id="calc-btn" type="button">Calculate Firing Solution</button>
+
+    <section id="error-box" class="error-box" hidden></section>
+
+    <section id="results" class="results" hidden>
+      <h2>Distance</h2>
+      <div class="distance-value" id="result-distance">&mdash;</div>
+
+      <div class="solutions">
+        <article class="solution solution-high">
+          <h3>Mortar Solution <span class="tag">high angle</span></h3>
+          <dl>
+            <dt>Elevation</dt><dd id="high-elevation">&mdash;</dd>
+            <dt>Firing height (apex)</dt><dd id="high-height">&mdash;</dd>
+            <dt>Time of flight</dt><dd id="high-tof">&mdash;</dd>
+          </dl>
+        </article>
+
+        <article class="solution solution-low">
+          <h3>Alternate Solution <span class="tag">low angle</span></h3>
+          <dl>
+            <dt>Elevation</dt><dd id="low-elevation">&mdash;</dd>
+            <dt>Firing height (apex)</dt><dd id="low-height">&mdash;</dd>
+            <dt>Time of flight</dt><dd id="low-tof">&mdash;</dd>
+          </dl>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Assumes flat terrain, a single muzzle velocity calibrated to a 700&nbsp;m max range at 45&deg; elevation, and standard projectile motion (g&nbsp;=&nbsp;9.8&nbsp;m/s&sup2;).</p>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
