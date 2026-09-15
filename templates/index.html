@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wardogs Mortar Calculator</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Mortar Fire Calculator</h1>
+    <p class="subtitle">Wardogs &mdash; range, elevation &amp; firing height solver</p>
+  </header>
+
+  <main>
+    <form method="POST">
+      <section class="panel" aria-labelledby="firer-heading">
+        <h2 id="firer-heading">Firing Position</h2>
+        <div class="field-row">
+          <label for="firer-x">X</label>
+          <input type="number" step="any" id="firer-x" name="firer_x" value="{{ form_values.firer_x }}" placeholder="0" inputmode="decimal">
+          <label for="firer-y">Y</label>
+          <input type="number" step="any" id="firer-y" name="firer_y" value="{{ form_values.firer_y }}" placeholder="0" inputmode="decimal">
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="target-heading">
+        <h2 id="target-heading">Target Position</h2>
+        <div class="field-row">
+          <label for="target-x">X</label>
+          <input type="number" step="any" id="target-x" name="target_x" value="{{ form_values.target_x }}" placeholder="0" inputmode="decimal">
+          <label for="target-y">Y</label>
+          <input type="number" step="any" id="target-y" name="target_y" value="{{ form_values.target_y }}" placeholder="0" inputmode="decimal">
+        </div>
+      </section>
+
+      <button class="calc-btn" type="submit">Calculate Firing Solution</button>
+    </form>
+
+    {% if error %}
+    <section class="error-box">{{ error }}</section>
+    {% endif %}
+
+    {% if result %}
+    <section class="results">
+      <h2>Distance</h2>
+      <div class="distance-value">{{ "%.1f"|format(result.distance) }} m</div>
+
+      <div class="solutions">
+        <article class="solution solution-high">
+          <h3>Mortar Solution <span class="tag">high angle</span></h3>
+          <dl>
+            <dt>Elevation</dt><dd>{{ "%.1f"|format(result.high.elevation_deg) }}&deg;</dd>
+            <dt>Firing height (apex)</dt><dd>{{ "%.1f"|format(result.high.height) }} m</dd>
+            <dt>Time of flight</dt><dd>{{ "%.1f"|format(result.high.time_of_flight) }} s</dd>
+          </dl>
+        </article>
+
+        <article class="solution solution-low">
+          <h3>Alternate Solution <span class="tag">low angle</span></h3>
+          <dl>
+            <dt>Elevation</dt><dd>{{ "%.1f"|format(result.low.elevation_deg) }}&deg;</dd>
+            <dt>Firing height (apex)</dt><dd>{{ "%.1f"|format(result.low.height) }} m</dd>
+            <dt>Time of flight</dt><dd>{{ "%.1f"|format(result.low.time_of_flight) }} s</dd>
+          </dl>
+        </article>
+      </div>
+    </section>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>Assumes flat terrain, a single muzzle velocity calibrated to a 700&nbsp;m max range at 45&deg; elevation, and standard projectile motion (g&nbsp;=&nbsp;9.8&nbsp;m/s&sup2;).</p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Wardogs Mortar Calculator
 
-A small static web page that calculates a mortar firing solution (elevation, apex firing height, time of flight) from the X/Y coordinates of a firing position and a target, for the game Wardogs.
+A small Flask app that calculates a mortar firing solution (elevation, apex firing height, time of flight) from the X/Y coordinates of a firing position and a target, for the game Wardogs.
 
 ## How it works
 
@@ -15,26 +15,27 @@ For any target distance up to 700 m there are two elevation angles that land on 
 - **High angle** (the typical mortar solution) — steeper arc, shown first.
 - **Low angle** — flatter, faster, alternate solution.
 
-For each, the page reports the elevation angle, the apex (peak) height of the round's arc, and time of flight.
+For each, the page reports the elevation angle, the apex (peak) height of the round's arc, and time of flight. The form posts to the server, and [app.py](app.py) computes and renders the result — no client-side JavaScript involved.
 
-Assumes flat terrain (no elevation/Z difference between firer and target) and `g = 9.8 m/s²`. Both constants live at the top of [script.js](script.js) if you need to tune them to match observed in-game behavior.
+Assumes flat terrain (no elevation/Z difference between firer and target) and `g = 9.8 m/s²`. Both constants live at the top of [app.py](app.py) if you need to tune them to match observed in-game behavior.
 
 ## Running locally
 
-Just open `index.html` in a browser, or serve the folder with any static file server:
-
 ```bash
-npx serve .
+pip install -r requirements.txt
+python app.py
 ```
+
+Then visit `http://localhost:5000`.
 
 ## Running with Docker
 
 ```bash
 docker build -t wardogs-app .
-docker run -d -p 8080:80 --name wardogs-app wardogs-app
+docker run -d -p 8080:8000 --name wardogs-app wardogs-app
 ```
 
-Then visit `http://localhost:8080`.
+Then visit `http://localhost:8080`. The container runs the app with `gunicorn` on port `8000` internally (see [Dockerfile](Dockerfile)).
 
 ## Deploying with Portainer
 
@@ -42,7 +43,7 @@ Then visit `http://localhost:8080`.
 
 1. In Portainer, go to **Stacks → Add stack**.
 2. Choose **Repository**, and point it at this GitHub repo's URL (branch `master`, compose path `docker-compose.yml`).
-3. Deploy the stack. Portainer will build the image from the included `Dockerfile` and run it, publishing on port `8080` (edit the port mapping in `docker-compose.yml` first if you need a different one).
+3. Deploy the stack. Portainer will build the image from the included `Dockerfile` and run it, publishing on host port `8080` (edit the port mapping in `docker-compose.yml` first if you need a different one).
 
 **Option B — Build and upload manually:**
 

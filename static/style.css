@@ -89,7 +89,7 @@ h1 {
   border-color: var(--accent);
 }
 
-#calc-btn {
+.calc-btn {
   width: 100%;
   padding: 14px;
   background: var(--accent-dim);
@@ -104,8 +104,8 @@ h1 {
   transition: background 0.15s ease;
 }
 
-#calc-btn:hover { background: var(--accent); color: #12140f; }
-#calc-btn:active { transform: translateY(1px); }
+.calc-btn:hover { background: var(--accent); color: #12140f; }
+.calc-btn:active { transform: translateY(1px); }
 
 .error-box {
   margin-top: 16px;

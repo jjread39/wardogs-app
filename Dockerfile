@@ -1,5 +1,14 @@
-FROM nginx:alpine
+FROM python:3.12-alpine
 
-COPY index.html style.css script.js /usr/share/nginx/html/
+WORKDIR /app
 
-EXPOSE 80
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app.py .
+COPY templates templates
+COPY static static
+
+EXPOSE 8000
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
