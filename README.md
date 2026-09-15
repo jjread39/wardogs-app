@@ -17,7 +17,7 @@ For any target distance up to 700 m there are two elevation angles that land on 
 
 For each, the page reports the elevation angle, the apex (peak) height of the round's arc, and time of flight. The form posts to the server, and [app.py](app.py) computes and renders the result — no client-side JavaScript involved.
 
-Assumes flat terrain (no elevation/Z difference between firer and target) and `g = 9.8 m/s²`. Both constants live at the top of [app.py](app.py) if you need to tune them to match observed in-game behavior.
+Assumes flat terrain (no elevation/Z difference between firer and target) and `g = 9.8 m/s²`. The X/Y coordinates you enter are read straight off the game's map grid, where each coordinate unit is 100 m (`COORDINATE_SCALE_M` in [app.py](app.py)) — e.g. a raw coordinate difference of `6.7` is an actual 670 m distance. All of these constants live at the top of [app.py](app.py) if you need to tune them to match observed in-game behavior.
 
 ## Running locally
 

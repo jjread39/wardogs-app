@@ -11,6 +11,10 @@ GRAVITY = 9.8  # m/s^2
 MAX_RANGE = 700  # m
 MUZZLE_VELOCITY = math.sqrt(MAX_RANGE * GRAVITY)  # m/s
 
+# The game's X/Y grid is in units of 100 m (a raw coordinate difference of
+# 6.7 corresponds to an actual 670 m distance).
+COORDINATE_SCALE_M = 100  # meters per X/Y coordinate unit
+
 
 def solve_for_angle(theta_rad):
     height = (MUZZLE_VELOCITY * math.sin(theta_rad)) ** 2 / (2 * GRAVITY)
@@ -46,7 +50,7 @@ def index():
         if None in (fx, fy, tx, ty):
             error = "Enter numeric X/Y coordinates for both the firing position and the target."
         else:
-            distance = math.hypot(tx - fx, ty - fy)
+            distance = math.hypot(tx - fx, ty - fy) * COORDINATE_SCALE_M
 
             if distance == 0:
                 error = "Target is on top of the firing position — there is no distance to solve for."
